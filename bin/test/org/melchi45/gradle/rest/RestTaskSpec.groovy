@@ -1,4 +1,4 @@
-package org._10ne.gradle.rest
+package org.melchi45.gradle.rest
 
 import groovyx.net.http.AuthConfig
 import groovyx.net.http.HttpResponseDecorator

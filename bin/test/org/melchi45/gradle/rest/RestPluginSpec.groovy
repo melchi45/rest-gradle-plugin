@@ -1,4 +1,4 @@
-package org._10ne.gradle.rest
+package org.melchi45.gradle.rest
 
 import org.gradle.testfixtures.ProjectBuilder
 import spock.lang.Specification

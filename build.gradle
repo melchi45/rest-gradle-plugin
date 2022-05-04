@@ -12,6 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Modified by: Youngho Kim
+ * Modified Date: 2022.05.04
  */
 
 buildscript {
@@ -22,87 +25,125 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.gradle.publish:plugin-publish-plugin:0.9.3'
+        classpath 'com.gradle.publish:plugin-publish-plugin:1.0.0-rc-1'
     }
 }
 
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
+apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'project-reports'
+
+apply plugin: 'maven-publish'
+apply plugin: 'java-gradle-plugin'
 apply plugin: 'com.gradle.plugin-publish'
 
-group = 'org._10ne.gradle'
+version = VERSION_NAME
+group = GROUP
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    compileJava.options.encoding = "UTF-8"
+
+    withJavadocJar()
+    withSourcesJar()
+}
 
 repositories {
     jcenter()
+    mavenCentral()
 }
 
 dependencies {
-    compile gradleApi()
-    compile 'org.codehaus.groovy:groovy-all:2.4.4'
-    compile('org.codehaus.groovy.modules.http-builder:http-builder:0.7.2') {
+    implementation gradleApi()
+    implementation 'org.codehaus.groovy:groovy-all:3.0.9'
+    implementation('org.codehaus.groovy.modules.http-builder:http-builder:0.7.2') {
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
         exclude group: 'org.codehaus.groovy', module: 'groovy'
     }
-    testCompile ('org.spockframework:spock-core:1.0-groovy-2.4') {
+    testImplementation ('org.spockframework:spock-core:2.0-groovy-3.0') {
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
-    testCompile 'cglib:cglib-nodep:3.1'
+    testImplementation 'cglib:cglib-nodep:3.3.0'
 }
 
 task sourceJar(type: Jar) {
     from sourceSets.main.allJava
 }
 
-configure(install.repositories.mavenInstaller) {
-    pom.project {
-        name('rest-gradle-plugin')
-        description('A Gradle plugin that provides a task infrastructure to perform REST requests.')
-        url('https://github.com/noamt/rest-gradle-plugin')
-        inceptionYear '2013'
-        licenses {
-            license {
-                name 'The Apache Software License, Version 2.0'
-                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                distribution 'repo'
-            }
-        }
-        scm {
-            url "https://github.com/noamt/rest-gradle-plugin.git"
-        }
-        developers {
-            developer {
-                id 'noamt'
-                name 'Noam Y. Tenne'
-                roles {
-                    role 'Developer'
-                }
-            }
-        }
+// Use java-gradle-plugin to generate plugin descriptors and specify plugin ids
+gradlePlugin {
+  plugins {
+    restPlugin {
+      id = 'org.melchi45.rest'
+      displayName = 'rest-gradle-plugin'
+      implementationClass = 'org.melchi45.gradle.rest.RestPlugin'
     }
+  }
 }
 
 pluginBundle {
     website = 'http://www.10ne.org/'
-    vcsUrl = 'https://github.com/noamt/rest-gradle-plugin.git'
+    vcsUrl = 'https://github.com/melchi45/rest-gradle-plugin.git'
     description = 'A Gradle plugin that provides a task infrastructure to perform REST requests.'
-    
-    plugins {
-        restPlugin {
-            id = 'org.tenne.rest'
-            displayName = 'REST Gradle Plugin'
-            tags = ['REST', 'API']
-            version = '0.4.2'
-        }
-    }
-
-    mavenCoordinates {
-        groupId = "org._10ne.gradle"
-        artifactId = "rest-gradle-plugin"
-    }
+    tags = ['REST', 'API']
+    version = '0.5'
 }
+
+
+// configure(install.repositories.mavenInstaller) {
+//     pom.project {
+//         name('rest-gradle-plugin')
+//         description('A Gradle plugin that provides a task infrastructure to perform REST requests.')
+//         url('https://github.com/melchi45/rest-gradle-plugin')
+//         inceptionYear '2022'
+//         licenses {
+//             license {
+//                 name 'The Apache Software License, Version 2.0'
+//                 url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                 distribution 'repo'
+//             }
+//         }
+//         scm {
+//             url "https://github.com/melchi45/rest-gradle-plugin.git"
+//         }
+//         developers {
+//             developer {
+//                 id 'noamt'
+//                 name 'Noam Y. Tenne'
+//                 roles {
+//                     role 'Developer'
+//                 }
+//             }
+//             developer {
+//                 id 'melchi45'
+//                 name 'Youngho Kim'
+//                 roles {
+//                     role 'Developer'
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// pluginBundle {
+//     website = 'http://www.10ne.org/'
+//     vcsUrl = 'https://github.com/noamt/rest-gradle-plugin.git'
+//     description = 'A Gradle plugin that provides a task infrastructure to perform REST requests.'
+    
+//     plugins {
+//         restPlugin {
+//             id = 'org.tenne.rest'
+//             displayName = 'REST Gradle Plugin'
+//             tags = ['REST', 'API']
+//             version = '0.4.2'
+//         }
+//     }
+
+//     mavenCoordinates {
+//         groupId = "org._10ne.gradle"
+//         artifactId = "rest-gradle-plugin"
+//     }
+// }

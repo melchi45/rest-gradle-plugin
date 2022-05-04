@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org._10ne.gradle.rest
+package org.melchi45.gradle.rest
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project

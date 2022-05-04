@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package org._10ne.gradle.rest
+package org.melchi45.gradle.rest
 
 import groovyx.net.http.HttpResponseDecorator
 import groovyx.net.http.RESTClient
+import groovyx.net.http.HttpResponseException
 import org.apache.commons.lang.StringUtils
 import org.apache.http.HttpHeaders
 import org.gradle.api.DefaultTask
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.GradleException
 import org.slf4j.Logger
@@ -36,6 +38,7 @@ class RestTask extends DefaultTask {
 
     private static Logger slf4jLogger = LoggerFactory.getLogger(RestTask)
 
+    @Internal
     RESTClient client
 
     @Input
@@ -46,7 +49,7 @@ class RestTask extends DefaultTask {
 
     @Input
     @Optional
-    boolean preemptiveAuth
+    Boolean preemptiveAuth
 
     @Input
     @Optional
@@ -76,6 +79,7 @@ class RestTask extends DefaultTask {
     @Optional
     Closure responseHandler
 
+    @Internal
     HttpResponseDecorator serverResponse
 
     RestTask() {
@@ -133,7 +137,7 @@ class RestTask extends DefaultTask {
             } else {
                 callResponseHandler()
             }
-        } catch (groovyx.net.http.HttpResponseException e) {
+        } catch (HttpResponseException e) {
             throw new GradleException(e.getResponse().getData().toString(), e)
         }
     }
