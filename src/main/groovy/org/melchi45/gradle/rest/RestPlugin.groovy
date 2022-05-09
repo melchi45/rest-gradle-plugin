@@ -21,6 +21,7 @@ import org.gradle.api.Project
 
 /**
  * @author Noam Y. Tenne
+ * @author Youngho Kim
  */
 class RestPlugin implements Plugin<Project> {
 

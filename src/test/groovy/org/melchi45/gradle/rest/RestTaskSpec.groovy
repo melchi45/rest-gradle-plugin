@@ -14,6 +14,7 @@ import spock.lang.Specification
 
 /**
  * @author Noam Y. Tenne
+ * @author Youngho Kim
  */
 class RestTaskSpec extends Specification {
 

@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory
 
 /**
  * @author Noam Y. Tenne
+ * @author Youngho Kim
  */
 class RestTask extends DefaultTask {
 

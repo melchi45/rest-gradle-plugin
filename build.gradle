@@ -73,6 +73,48 @@ task sourceJar(type: Jar) {
     from sourceSets.main.allJava
 }
 
+// Here we add a new SourceSet
+// that has a resources directory
+// at 'src/main' or 'src/test'. This directory
+// contains Groovydoc template files
+// we want to override for our project.
+sourceSets {
+    groovydoc {
+        resources {
+            srcDir 'src/main/groovy'
+            srcDir 'src/test/groovy'
+        }
+    }
+}
+
+// Customize groovydoc task that is
+// added by the Groovy plugin.
+groovydoc {
+    // Set document and window titles.
+    docTitle = "Gradle REST plugin GroovyDoc"
+    windowTitle = "Gradle REST plugin GroovyDoc"
+
+    // Set custom header. We will include this
+    // in the changed classDocName.html file.
+    header = '''\
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/>
+        <h2>Gradle REST plugin</h2>
+        '''.stripIndent()
+
+    // Set custom footer for generated documentation.
+    footer = """\
+        <div class="custom-footer">
+            Generated on: ${new Date().format('yyyy-MM-dd HH:mm:ss')}
+        </div>""".stripIndent()
+
+    // Change classpath property and include
+    // the output of the SourceSet groovydoc.
+    // The output contains the changed stylesheet
+    // and template file and must be first in the classpath
+    // before the files that are bundled with Groovy.
+    classpath = sourceSets.groovydoc.output + classpath
+}
+
 // Use java-gradle-plugin to generate plugin descriptors and specify plugin ids
 // reference from:
 // https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html
@@ -87,7 +129,7 @@ gradlePlugin {
   plugins {
     restPlugin {
       id = 'org.melchi45.rest'
-      displayName = 'rest-gradle-plugin'
+      displayName = 'REST Gradle Plugin'
       implementationClass = 'org.melchi45.gradle.rest.RestPlugin'
     }
   }
@@ -96,14 +138,56 @@ gradlePlugin {
 pluginBundle {
   website = 'http://www.10ne.org/'
   vcsUrl = 'https://github.com/melchi45/rest-gradle-plugin.git'
-  description = 'A Gradle plugin that provides a task infrastructure to perform REST requests.'
-
+  description = POM_DESCRIPTION
   tags = ['REST', 'API']
-  version = '0.5.1'
+  version = VERSION_NAME
 }
 
 // publish local folder
 publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = project.archivesBaseName
+            groupId = GROUP
+            version = VERSION_NAME
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom {
+                name = POM_NAME
+                description = POM_DESCRIPTION
+                inceptionYear = POM_INCEPTION_YEAR
+                licenses {
+                    license {
+                        name = POM_LICENCE_NAME
+                        url = POM_LICENCE_URL
+                        distribution = POM_LICENCE_DIST
+                    }
+                }
+                scm {
+                    url = POM_SCM_URL
+                }
+                developers {
+                    developer {
+                        id = 'noamt'
+                        name = 'Noam Y. Tenne'
+                        // roles {
+                        //     role = 'Developer'
+                        // }
+                    }
+                    developer {
+                        id = 'melchi45'
+                        name = 'Youngho Kim'
+                        email = 'melchi45@gmail.com'
+                        // roles {
+                        //     role = 'Developer'
+                        // }
+                    }
+                }
+            }
+        }
+    }
     repositories {
         maven {
             name = 'local-plugin'
