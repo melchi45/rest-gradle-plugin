@@ -151,8 +151,8 @@ publishing {
             groupId = GROUP
             version = VERSION_NAME
             from components.java
-            artifact sourcesJar
-            artifact javadocJar
+            // artifact sourcesJar
+            // artifact javadocJar
 
             pom {
                 name = POM_NAME
