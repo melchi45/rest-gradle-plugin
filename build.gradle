@@ -43,8 +43,8 @@ version = VERSION_NAME
 group = GROUP
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
     compileJava.options.encoding = "UTF-8"
 
     withJavadocJar()
@@ -74,6 +74,15 @@ task sourceJar(type: Jar) {
 }
 
 // Use java-gradle-plugin to generate plugin descriptors and specify plugin ids
+// reference from:
+// https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html
+// # ./gradlew publishPlugins
+// You can see API keys on this url:
+// https://plugins.gradle.org/u/<your gradle account>
+//
+// If you have not configured your Gradle Plugin Portal key and secret values in
+// your gradle.properties file, you can specify them on the command-line
+// ./gradlew publishPlugins -Pgradle.publish.key=<key> -Pgradle.publish.secret=<secret>
 gradlePlugin {
   plugins {
     restPlugin {
@@ -85,13 +94,35 @@ gradlePlugin {
 }
 
 pluginBundle {
-    website = 'http://www.10ne.org/'
-    vcsUrl = 'https://github.com/melchi45/rest-gradle-plugin.git'
-    description = 'A Gradle plugin that provides a task infrastructure to perform REST requests.'
-    tags = ['REST', 'API']
-    version = '0.5'
+  website = 'http://www.10ne.org/'
+  vcsUrl = 'https://github.com/melchi45/rest-gradle-plugin.git'
+  description = 'A Gradle plugin that provides a task infrastructure to perform REST requests.'
+
+  tags = ['REST', 'API']
+  version = '0.5.1'
 }
 
+// publish local folder
+publishing {
+    repositories {
+        maven {
+            name = 'local-plugin'
+            url = '../rest-gradle-plugin'
+        }
+    }
+}
+
+// publishing {
+//     publications {
+//         mavenJava(MavenPublication) {
+//             artifactId = 'rest-gradle-plugin'
+//         }
+//     }
+// }
+
+// signing {
+//     sign publishing.publications.mavenJava
+// }
 
 // configure(install.repositories.mavenInstaller) {
 //     pom.project {
