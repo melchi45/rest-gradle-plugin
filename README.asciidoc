@@ -4,7 +4,7 @@
 
 === Installation ===
 
- [![codecov](https://codecov.io/gh/melchi45/live555/branch/master/graph/badge.svg?token=C0AIRJXUGI)](https://codecov.io/gh/melchi45/live555) image:https://travis-ci.org/noamt/rest-gradle-plugin.svg?branch=master["Build Status", link="https://travis-ci.org/noamt/rest-gradle-plugin"]
+ image:https://travis-ci.org/noamt/rest-gradle-plugin.svg?branch=master["Build Status", link="https://travis-ci.org/noamt/rest-gradle-plugin"]
 
 
 See the http://plugins.gradle.org/plugin/org.tenne.rest[Gradle Plugin Portal] for installation instructions.
