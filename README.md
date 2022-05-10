@@ -4,7 +4,7 @@
 
 === Installation ===
 
- [![codecov](https://codecov.io/gh/melchi45/rest-gradle-plugin/branch/master/graph/badge.svg?token=C0AIRJXUGI)](https://codecov.io/gh/melchi45/rest-gradle-plugin) [![Latest release](https://img.shields.io/github/v/release/melchi45/rest-gradle-plugin)](https://github.com/melchi45/live555/releases/rest-gradle-plugin)
+[![Gradle](https://github.com/melchi45/rest-gradle-plugin/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/melchi45/rest-gradle-plugin/actions/workflows/gradle-publish.yml)
 
 See the http://plugins.gradle.org/plugin/org.tenne.rest[Gradle Plugin Portal] for installation instructions.
 
