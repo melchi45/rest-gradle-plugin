@@ -69,8 +69,37 @@ dependencies {
     testImplementation 'cglib:cglib-nodep:3.3.0'
 }
 
+task printSourceSetInformation(){
+    doLast{
+        sourceSets.each { srcSet ->
+            println "["+srcSet.name+"]"
+            print "-->Source directories: "+srcSet.allJava.srcDirs+"\n"
+            // print "-->Source directories: "+srcSet.allGroovy.srcDirs+"\n"
+            print "-->Output directories: "+srcSet.output.classesDirs.files+"\n"
+            println ""
+        }
+    }
+}
+
+// task sourceSetProperties() {
+//     sourceSets {
+//         main {
+//             println "java.srcDirs = ${java.srcDirs}"
+//             println "resources.srcDirs = ${resources.srcDirs}"
+//             println "java.files = ${java.files.name}"
+//             println "allJava.files = ${allJava.files.name}"
+//             println "allGroovy.files = ${allGroovy.files.name}"
+//             println "resources.files = ${resources.files.name}"
+//             println "allSource.files = ${allSource.files.name}"
+//             println "output.classesDirs = ${output.classesDirs}"
+//             println "output.resourcesDir = ${output.resourcesDir}"
+//             println "output.files = ${output.files}"
+//         }
+//     }
+// }
+
 task sourceJar(type: Jar) {
-    from sourceSets.main.allJava
+    from sourceSets.main.allSource
 }
 
 // Here we add a new SourceSet
@@ -82,9 +111,24 @@ sourceSets {
     groovydoc {
         resources {
             srcDir 'src/main/groovy'
-            srcDir 'src/test/groovy'
         }
     }
+    // main {
+    //     java {
+    //         srcDir 'src/main/java'
+    //     }
+    //     groovy {
+    //         srcDirs 'src/main/groovy'
+    //     }
+    // }
+    // test {
+    //     java {
+    //         srcDir 'src/test/java'
+    //     }
+    //     groovy {
+    //         srcDirs 'src/test/groovy'
+    //     }
+    // }
 }
 
 // Customize groovydoc task that is
@@ -128,9 +172,9 @@ groovydoc {
 gradlePlugin {
   plugins {
     restPlugin {
-      id = 'org.melchi45.rest'
+      id = 'io.github.melchi45.rest'
       displayName = 'REST Gradle Plugin'
-      implementationClass = 'org.melchi45.gradle.rest.RestPlugin'
+      implementationClass = 'io.github.melchi45.gradle.rest.RestPlugin'
     }
   }
 }
@@ -151,8 +195,8 @@ publishing {
             groupId = GROUP
             version = VERSION_NAME
             from components.java
-            // artifact sourcesJar
-            // artifact javadocJar
+            artifact sourcesJar
+            artifact javadocJar
 
             pom {
                 name = POM_NAME
@@ -192,6 +236,14 @@ publishing {
         maven {
             name = 'local-plugin'
             url = '../rest-gradle-plugin'
+        }
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/melchi45/rest-gradle-plugin")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
         }
     }
 }

@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package org.melchi45.gradle.rest
+package io.github.melchi45.gradle.rest
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 /**
  * @author Noam Y. Tenne
+ * @author Youngho Kim
  */
 class RestPlugin implements Plugin<Project> {
 
