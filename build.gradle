@@ -240,10 +240,10 @@ publishing {
         maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/melchi45/rest-gradle-plugin")
-            // credentials {
-            //     username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
-            //     password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
-            // }
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
         }
     }
 }
