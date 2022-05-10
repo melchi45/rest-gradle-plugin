@@ -134,6 +134,8 @@ sourceSets {
 // Customize groovydoc task that is
 // added by the Groovy plugin.
 groovydoc {
+    println "user_name: " + System.getenv("GITHUB_ACTOR")
+    println "user_token: " + System.getenv("GITHUB_TOKEN")
     // Set document and window titles.
     docTitle = "Gradle REST plugin GroovyDoc"
     windowTitle = "Gradle REST plugin GroovyDoc"
@@ -247,9 +249,6 @@ publishing {
         }
     }
 }
-
-println ${System.getenv("GITHUB_ACTOR")}
-println ${System.getenv("GITHUB_TOKEN")}
 
 // publishing {
 //     publications {
