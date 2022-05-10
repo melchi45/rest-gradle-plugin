@@ -23,7 +23,7 @@ The plugin adds a new task named `rest`. This task exposes the following propert
 
 For example, a POST request task:
 [source,groovy]
-----
+```shell
 task attack(type: io.github.melchi45.gradle.rest.RestTask) {
     httpMethod = 'post'
     uri = 'https://battle.server.com/attack'
@@ -37,4 +37,4 @@ task attack(type: io.github.melchi45.gradle.rest.RestTask) {
         assert it.message == 'success'
     }
 }
-----
+```
