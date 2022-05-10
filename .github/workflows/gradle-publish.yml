@@ -25,6 +25,10 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   GRADLE_BUILD_CMD: Release
+  GITHUB_ACTOR: ${{ github.actor }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  echo "Github username: ${GITHUB_ACTOR}"
+  echo "Github token: ${GITHUB_TOKEN}"
 
 jobs:
   build:
@@ -58,3 +62,4 @@ jobs:
       env:
         USERNAME: ${{ github.actor }}
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
