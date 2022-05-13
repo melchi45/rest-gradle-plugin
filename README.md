@@ -1,6 +1,6 @@
-[![Gradle](https://github.com/melchi45/rest-gradle-plugin/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/melchi45/rest-gradle-plugin/actions/workflows/gradle-publish.yml)
+*** REST Gradle Plugin for gradle 7 ***
 
-= REST Gradle Plugin for gradle 7 =
+[![Gradle](https://github.com/melchi45/rest-gradle-plugin/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/melchi45/rest-gradle-plugin/actions/workflows/gradle-publish.yml)
 
 After gradle version is updated to 7, RestTask of 10ne throws an error. If an error occurs in @Internal annotation in Gradle 7, please replace RestTask with the corresponding module. Since the developer of 10ne does not have any more upate, the distribution package suitable for gradle 7 has been distributed as a package on github.
 
