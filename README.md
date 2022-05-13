@@ -1,4 +1,34 @@
-= REST Gradle Plugin =
+= REST Gradle Plugin for gradle 7 =
+After gradle version is updated to 7, RestTask of 10ne throws an error. If an error occurs in @Internal annotation in Gradle 7, please replace RestTask with the corresponding module. Since the developer of 10ne does not have any more upate, the distribution package suitable for gradle 7 has been distributed as a package on github.
+
+```shell
+apply plugin: "io.github.melchi45.rest"
+import io.github.melchi45.gradle.rest.*
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/melchi45/rest-gradle-plugin")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+        dependencies {
+            classpath "io.github.melchi45.gradle:rest-gradle-plugin:0.5.3"
+        }
+    }
+}
+
+afterEvaluate {
+    preBuild.dependsOn restTask
+}
+
+task restTask(type: io.github.melchi45.gradle.rest.RestTask){
+    // TODO: implement your rest task in here follow below description.
+}
+```
 
 == A Gradle plugin that provides a task infrastructure to perform REST requests ==
 
